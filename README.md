@@ -27,14 +27,14 @@ until it's changed or session expires.
 
 PHP Implementation:
 
-Session must be started before using Cryptopost class. Then, let's intercept an encrypted form:
+Session must be started before using EncryptPost class. Then, let's intercept an encrypted form:
 
 session_start(); 
 
-require_once './Cryptopost.class.php'; 
-$crypto = new Cryptopost(1024, './openssl.cnf');
+require_once './EncryptPost.class.php'; 
+$crypto = new EncryptPost(1024, './openssl.cnf');
 
-if (isset($_POST['cryptoPost'])){
+if (isset($_POST['EncryptPost'])){
 	$formId = $crypto->decodeForm();
 }
 
@@ -43,22 +43,22 @@ Before that $_POST will only contain somethig like:
 
 var_dump($_POST) result:
 array(2) {
-  ["cryptoPost_key"]=>
+  ["EncryptPost_key"]=>
   string(256) "5df90b95ec4fab45d50d34c917c6578f939ccbfadf9486f133850d47a3d6b2c82a277a3468ca11fc7
   b9163c385eacc2a3a4d091cf8797e55d681b0279058a9f3e334092fb03791931d22ca3847f4f9d4dec0d0a47936f01
   2b6be9723981088d0b049cff46a8e81ec93e2b4f7c3a387d36e2033754d1420a8dc800a4eec6cd0e9"
-  ["cryptoPost"]=>
+  ["EncryptPost"]=>
   string(242) "U2FsdGVkX1/53Ut6KFi36Ou/e3lIJz/5pf8FuPb1Yh//WdefKb0iyCke2/g0QPD5
 BeknGV4L8dveRDbQ4kXm5YNi3nyG+/F8JWKDipA9ygHPf5KdFr6pYcfzNQjwwfd8
 rIC19cl9IOJcs171tm0OBVknaloQWDwpLM/KjISdwwPiRGCtcBhkYrcdsgv6JcwD
 aVuU4VunXdWJji9WAKD+1bJrThq2VLjEHhELl26y4vI="
 }
-Note that "crytoPost_key" will be received only once at first time that server receives a coded 
-form. Following posts will include only the "cryptoPost" value unless keys are reset.
+Note that "EncryptPost_key" will be received only once at first time that server receives a coded 
+form. Following posts will include only the "EncryptPost" value unless keys are reset.
 
 To send the form encrypted to the server, simply include a call to the javascript crytopost class:
 
-<form id="form1" method="POST" action="test.php" onsubmit="return cryptoPost.encrypt('form1')">
+<form id="form1" method="POST" action="test.php" onsubmit="return EncryptPost.encrypt('form1')">
 
 Client may need an encrypted record to edit. Server can send it in this way:
 
@@ -71,7 +71,7 @@ $encrypted = $crypto->encodeData($record, $formId);
 
 ... and then, at the bottom of the html code:
 
-<script>cryptoPost.decrypt('<?php echo $encrypted;?>')</script>
+<script>EncryptPost.decrypt('<?php echo $encrypted;?>')</script>
 
 
 That's a simple and easy way to protect your data even with no SSL.
