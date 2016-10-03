@@ -58,7 +58,7 @@ form. Following posts will include only the "EncryptPost" value unless keys are 
 
 To send the form encrypted to the server, simply include a call to the javascript crytopost class:
 
-<form id="form1" method="POST" action="test.php" onsubmit="return EncryptPost.encrypt('form1')">
+\<form id="form1" method="POST" action="test.php" onsubmit="return EncryptPost.encrypt('form1')">
 
 Client may need an encrypted record to edit. Server can send it in this way:
 
@@ -69,9 +69,9 @@ $record = array(
 );
 $encrypted = $crypto->encodeData($record, $formId);
 
-... and then, at the bottom of the html code:
+... and then, at the bottom of your html code include a call to javascript decrypt method:
 
-<script>EncryptPost.decrypt('<?php echo $encrypted;?>')</script>
+\<script>EncryptPost.decrypt('<?php echo $encrypted;?>');\</script>
 
 
 That's a simple and easy way to protect your data even with no SSL.
